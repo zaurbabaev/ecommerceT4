@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <!-- title -->
+    <title>Login</title>
+    <style>
+
+        .no-footer footer {
+            display: none;
+        }
+
+        .breadcrumb-bg {
+            height: calc(var(--vh, 1vh) * 100);
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="no-footer">
+
+
+<section layout:fragment="content">
+
+    <!-- breadcrumb-section -->
+    <div class="breadcrumb-section breadcrumb-bg">
+
+        <div class="col-lg-8 offset-lg-2 text-center">
+            <section class="vh-100 gradient-custom d-flex justify-content-center align-items-center">
+                <div class="container py-4 h-100"> <!-- Py-5'ü Py-4 ile değiştirildi -->
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-12 col-md-8 col-lg-4 col-xl-6">
+                            <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                                <div class="card-body p-4 text-center"> <!-- P-5'ü P-4 ile değiştirildi -->
+                                    <form th:method="post">
+                                        <div class="mb-md-4 mt-md-3 pb-4"> <!-- Py-4 ve Pb-4 ile değiştirildi -->
+
+                                            <h2 class="fw-bold mb-2 text-white text-uppercase">Login</h2>
+                                            <p class="text-white mb-4">Please enter your email and password!</p>
+
+                                            <div class="form-outline form-white mb-4">
+                                                <input th:type="email" id="email" name="username"
+                                                       class="form-control form-control-lg" />
+                                                <label class="form-label" for="email"
+                                                       style="display: block; text-align: left; margin-top: 5px;">Email</label>
+                                            </div>
+
+                                            <div class="form-outline form-white mb-4">
+                                                <input th:type="password" id="typePasswordX" name="password"
+                                                       class="form-control form-control-lg" />
+                                                <label class="form-label" for="typePasswordX"
+                                                       style="display: block; text-align: left; margin-top: 5px;">Password</label>
+                                            </div>
+
+                                            <p class="small mb-4"><a class="text-white-50" href="#!">Forgot
+                                                password?</a></p>
+
+                                            <button class="btn btn-outline-light btn-lg px-5" type="submit">Login
+                                            </button>
+
+                                            <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                                                <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                                                <a href="#!" class="text-white"><i
+                                                        class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                                                <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                    <div>
+                                        <p class="text-white fw-bold">Don't have an account?
+                                            <a th:href="@{/register}" class="text-white-50 fw-bold">Sign Up</a>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+    </div>
+
+    <!-- end breadcrumb section -->
+
+</section>
+
+</body>
+</html>
