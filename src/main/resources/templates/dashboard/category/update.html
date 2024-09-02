@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/dashboard/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Category update</title>
+    <style>
+        .shift-right {
+            margin-left: 20px; /* Sağdan təxminən 20px boşluq yaradacaq */
+        }
+    </style>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <h3>Update category</h3>
+    <hr/>
+    <form method="post" th:object="${category}">
+        <input class="shift-right" type="text" th:field="*{name}">
+        <input type="submit" class="btn btn-success" value="Update">
+    </form>
+
+</section>
+</body>
+</html>

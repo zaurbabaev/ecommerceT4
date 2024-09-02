@@ -60,7 +60,7 @@ public class ShopController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
         ProductDetailDTO product = productService.getById(id);
-        List<ProductRelatedDTO> relatedProducts = productService.getRelatedProduct(product.categoryDTO().id(), id);
+        List<ProductRelatedDTO> relatedProducts = productService.getRelatedProduct(product.categoryDTO().getId(), id);
         model.addAttribute("product", product);
         model.addAttribute("relatedProducts", relatedProducts);
         return "shop/detail";
