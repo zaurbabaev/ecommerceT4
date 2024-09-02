@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,7 +21,13 @@ public class Order {
     @ManyToOne
     private UserEntity user;
 
-    private LocalDate orderDate;
+    private LocalDateTime orderDate;
+
+    private String address;
+
+    private String phoneNumber;
+
+    private String message;
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;

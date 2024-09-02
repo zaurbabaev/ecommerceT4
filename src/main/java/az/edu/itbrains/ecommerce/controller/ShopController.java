@@ -1,10 +1,12 @@
 package az.edu.itbrains.ecommerce.controller;
 
 import az.edu.itbrains.ecommerce.dto.basket.BasketAddDTO;
+import az.edu.itbrains.ecommerce.dto.order.PlaceOrderDTO;
 import az.edu.itbrains.ecommerce.dto.product.ProductDetailDTO;
 import az.edu.itbrains.ecommerce.dto.product.ProductRelatedDTO;
 import az.edu.itbrains.ecommerce.dto.user.UserBasketDTO;
 import az.edu.itbrains.ecommerce.service.BasketService;
+import az.edu.itbrains.ecommerce.service.OrderService;
 import az.edu.itbrains.ecommerce.service.ProductService;
 import az.edu.itbrains.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +42,14 @@ public class ShopController {
 
     private final UserService userService;
 
+    private final OrderService orderService;
+
     @Autowired
-    public ShopController(ProductService productService, BasketService basketService, UserService userService) {
+    public ShopController(ProductService productService, BasketService basketService, UserService userService, OrderService orderService) {
         this.productService = productService;
         this.basketService = basketService;
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/shop")
@@ -65,26 +70,44 @@ public class ShopController {
     public String basket(Model model, Principal principal) {
         UserBasketDTO userBasket = userService.getUserBasket(principal.getName());
         model.addAttribute("basket", userBasket);
-        return "shop/basket";
+        boolean active = userBasket.getTotal() == 0 ? false : true;
+        model.addAttribute("active", active);
+        return"shop/basket";
     }
 
-    @PostMapping("/basket")
-    public String basket(BasketAddDTO basketAddDTO, Principal principal) {
-        basketService.addToBasket(basketAddDTO, principal.getName());
+
+@PostMapping("/basket")
+public String basket(BasketAddDTO basketAddDTO, Principal principal) {
+    basketService.addToBasket(basketAddDTO, principal.getName());
+    return "redirect:/basket";
+}
+
+@GetMapping("/basket/{productId}")
+public String removeBasket(@PathVariable Long productId, Principal principal) {
+    basketService.removeFromBasket(productId, principal.getName());
+    return "redirect:/basket";
+
+}
+
+@GetMapping("/checkout")
+public String checkout(Principal principal, Model model) {
+    UserBasketDTO userBasket = userService.getUserBasket(principal.getName());
+    if (userBasket.getTotal() == 0) {
         return "redirect:/basket";
     }
+    model.addAttribute("userBasket", userBasket);
+    return "shop/checkout";
+}
 
-    @GetMapping("/basket/{productId}")
-    public String removeBasket(@PathVariable Long productId, Principal principal) {
-        basketService.removeFromBasket(productId, principal.getName());
+@PostMapping("/checkout")
+public String checkout(PlaceOrderDTO placeOrderDTO, Principal principal) {
+    UserBasketDTO userBasket = userService.getUserBasket(principal.getName());
+    if (userBasket.getTotal() == 0) {
         return "redirect:/basket";
-
     }
-
-    @GetMapping("/checkout")
-    public String checkout(){
-        return "shop/checkout";
-    }
+    orderService.checkout(principal.getName(), placeOrderDTO);
+    return "redirect:/";
+}
 
 
 }
