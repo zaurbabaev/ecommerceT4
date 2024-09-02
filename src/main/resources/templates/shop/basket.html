@@ -48,11 +48,13 @@
                             </thead>
                             <tbody>
                             <tr th:each="product :${basket.products}" class="table-body-row">
-                                <td class="product-remove"><a th:href="'/basket/'+${product.id}"><i class="far fa-window-close"></i></a></td>
+                                <td class="product-remove"><a th:href="'/basket/'+${product.id}"><i
+                                        class="far fa-window-close"></i></a></td>
                                 <td class="product-image"><img th:src="${product.image}" alt=""></td>
                                 <td class="product-name" th:text="${product.name}">Strawberry</td>
                                 <td class="product-price" th:text="${product.price}+' ₼'">$85</td>
-                                <td class="product-quantity"><input th:value="${product.quantity}" type="number" placeholder="0"></td>
+                                <td class="product-quantity"><input th:value="${product.quantity}" type="number"
+                                                                    placeholder="0"></td>
                                 <td class="product-total" th:text="${product.price * product.quantity}+' ₼'">1</td>
                             </tr>
 
@@ -87,7 +89,7 @@
                         </table>
                         <div class="cart-buttons">
                             <a href="cart.html" class="boxed-btn">Update Cart</a>
-                            <a href="/checkout" class="boxed-btn black">Check Out</a>
+                            <a th:href="${active}?'/checkout':'#'" class="boxed-btn black">Check Out</a>
                         </div>
                     </div>
 
